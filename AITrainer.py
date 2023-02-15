@@ -37,7 +37,7 @@ def main():
                 if dir == 1:
                     count += 0.5
                     dir = 0
-            # print(count)
+            print(count)
 
             # Draw Bar
             cv2.rectangle(img, (1100, 100), (1175, 650), color, 3)
