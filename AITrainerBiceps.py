@@ -5,8 +5,8 @@ import numpy as np
 import time
 import PoseModule as pm
 
-cap = cv2.VideoCapture(0)
-# cap = cv2.VideoCapture('http://192.168.1.31:8080/video')
+# cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('http://192.168.1.59:8080/video')
 
 
 def main():
