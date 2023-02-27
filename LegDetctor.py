@@ -31,7 +31,7 @@ def crop_frame(frame,x,y,w,h):
 
 # Step 1: Produce an edge map from the image using an edge detector
 
-cap = cv2.VideoCapture('biceps.mp4')
+cap = cv2.VideoCapture('Hammer.mp4')
 detector = pm.poseDetector()
 
 # Loop through the frames
@@ -78,8 +78,8 @@ while True:
     # Apply morphological operations like dilation or erosion
     # to the binary mask to remove noise or close gaps between the objects
 
-    cv2.imshow('Frame',cropped )
-    # cv2.imshow('Frame',mask )
+    # cv2.imshow('Frame',cropped )
+    cv2.imshow('Frame',mask )
 
     # Exit if the user presses 'q'
     if cv2.waitKey(1) == ord('q'):
