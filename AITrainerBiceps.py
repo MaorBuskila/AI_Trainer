@@ -5,8 +5,13 @@ import numpy as np
 import time
 import PoseModule as pm
 
-# cap = cv2.VideoCapture(0)
-cap = cv2.VideoCapture('Hammer.mp4')
+# frame_width = int(cap.get(3))
+# frame_height = int(cap.get(4))
+# size = (frame_width, frame_height)
+# result = cv2.VideoWriter('res_biceps.avi',
+#                          cv2.VideoWriter_fourcc(*'MJPG'),
+#                          10, size)
+# cap = cv2.VideoCapture('rony_biceps.MOV')
 # cap = cv2.VideoCapture('http://192.168.1.59:8080/video')
 
 # def drawArmContours(frame, x12, y12, x14, y14, x16, y16):
@@ -35,7 +40,12 @@ cap = cv2.VideoCapture('Hammer.mp4')
 #             # cv2.waitKey(1)
 
 
-def main():
+def biceps_curls():
+
+
+    # cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('Biceps/rony_biceps.MOV')
+
     detector = pm.poseDetector()
     count = 0
     dir = 0
@@ -43,8 +53,12 @@ def main():
     y1, y2, y3 = 0, 0, 0
     angle = 0
     while True:
+
         success, img = cap.read()
-        img = cv2.resize(img, (1280, 720))
+        if portrait_mode:
+            img = cv2.resize(img, (720, 1280))
+        if portrait_mode:
+            black_frame = createBlackFrame(img)
         img = detector.findPose(img, False)
         lmList = detector.findPosition(img, False)
         # print(lmList)
@@ -91,7 +105,7 @@ def main():
                 dir = 0
 
         # draw Contours
-        drawArmContours2(img, x1, y1, x2, y2, x3, y3)
+        drawArmContours(img, x1, y1, x2, y2, x3, y3)
 
         # draw Joints
         detector.drawJoints(img, 12, 14, 16, angle)
@@ -101,10 +115,22 @@ def main():
 
         # Draw Curl Count
         drawCounter(img, count)
+        if portrait_mode:
+            black_frame[:, 280:1000] = img
+            draw_bar(black_frame, color, bar, per)
+            cv2.imshow("Image", black_frame)
+            cv2.waitKey(1)
+        else:
+            draw_bar(img, color, bar, per)
+            cv2.imshow("Image", img)
+            cv2.waitKey(1)
 
-        # cv2.imshow("Image", img)
-        # cv2.waitKey(1)
+    cap.release()
+    # result.release()
+
+    # Closes all the frames
+    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
-    main()
+    biceps_curls()

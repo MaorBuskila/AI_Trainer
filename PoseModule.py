@@ -114,21 +114,21 @@ class poseDetector():
         return angle
  
 def main():
-    cap = cv2.VideoCapture('Triceps.MOV')
+    cap = cv2.VideoCapture('koren.MOV')
 
     # cap = cv2.VideoCapture('http://192.168.1.59:8080/video')
     pTime = 0
     detector = poseDetector()
     while True:
         success, img = cap.read()
-        img = cv2.resize(img, (720, 1280))
+        # img = cv2.resize(img, (720, 1280))
         cv2.imshow("Image", img)
         img = detector.findPose(img)
         lmList = detector.findPosition(img, draw=True)
         if len(lmList) != 0:
             print(lmList[14])
-            cv2.circle(img, (lmList[14][1], lmList[14][2]), 15, (0, 0, 255), cv2.FILLED)
- 
+            # cv2.circle(img, (lmList[14][1], lmList[14][2]), 15, (0, 0, 255), cv2.FILLED)
+
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
