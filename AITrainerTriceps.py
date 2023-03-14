@@ -5,7 +5,8 @@ import numpy as np
 import time
 import PoseModule as pm
 from util import *
-cap = cv2.VideoCapture('Triceps.MOV')
+
+
 
 
 # cap = cv2.VideoCapture('http://192.168.1.31:8080/video')
@@ -36,8 +37,8 @@ cap = cv2.VideoCapture('Triceps.MOV')
 #             # cv2.waitKey(1)
 
 
-
-def main():
+def triceps_extenstions():
+    cap = cv2.VideoCapture('Triceps/Triceps.MOV')
     detector = pm.poseDetector()
     count = 0
     dir = 0
@@ -79,11 +80,11 @@ def main():
             # print(count)
 
             # Draw performance
-            if(abs(x1-x2) < 30):
+            if (abs(x1 - x2) < 50):
                 # cv2.rectangle(img, (0, 450), (250, 720), (255, 255, 0), cv2.FILLED)
                 # print("Good")
                 cv2.putText(img, "Good!", (100, 200), cv2.FONT_HERSHEY_PLAIN, 10, (255, 0, 0), 10)
-            elif (abs(x2-x3) < 100):
+            elif (abs(x1 - x2) < 100):
                 # cv2.rectangle(img, (0, 450), (250, 720), (255, 255, 0), cv2.FILLED)
                 # print("OK")
                 cv2.putText(img, "Ok!", (100, 200), cv2.FONT_HERSHEY_PLAIN, 10, (255, 0, 0), 10)

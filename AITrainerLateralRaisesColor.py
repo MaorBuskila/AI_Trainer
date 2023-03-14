@@ -9,7 +9,8 @@ import PoseModule as pm
 
 # cap = cv2.VideoCapture('http://192.168.1.59:8080/video')
 
-def main():
+def lateral_raises():
+    cap = cv2.VideoCapture('Lateral/How to do a Dumbbell Lateral Raise.mp4')
     detector = pm.poseDetector()
     count = 0
     dir = 0

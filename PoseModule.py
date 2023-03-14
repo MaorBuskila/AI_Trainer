@@ -2,10 +2,10 @@ import cv2
 import mediapipe as mp
 import time
 import math
- 
- 
+
+
 class poseDetector():
- 
+
     def __init__(self, mode=False, upBody=False, smooth=True,
                  detectionCon=False, trackCon=0.5):
         self.mode = mode
@@ -16,7 +16,7 @@ class poseDetector():
         self.mpDraw = mp.solutions.drawing_utils
         self.mpPose = mp.solutions.pose
         self.pose = self.mpPose.Pose(self.mode, self.upBody, self.smooth, self.detectionCon, self.trackCon)
- 
+
     def findPose(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.pose.process(imgRGB)
@@ -25,7 +25,7 @@ class poseDetector():
                 self.mpDraw.draw_landmarks(img, self.results.pose_landmarks,
                                            self.mpPose.POSE_CONNECTIONS)
         return img
- 
+
     def findPosition(self, img, draw=True):
         self.lmList = []
         if self.results.pose_landmarks:
@@ -37,21 +37,21 @@ class poseDetector():
                 if draw:
                     cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
         return self.lmList
- 
+
     def findAngle(self, img, p1, p2, p3):
- 
+
         # Get the landmarks
-        x1, y1  = self.lmList[p1][1:]
+        x1, y1 = self.lmList[p1][1:]
         x2, y2 = self.lmList[p2][1:]
         x3, y3 = self.lmList[p3][1:]
- 
+
         # Calculate the Angle
         angle = math.degrees(math.atan2(y3 - y2, x3 - x2) -
                              math.atan2(y1 - y2, x1 - x2))
 
         if angle < 0:
             angle += 360
- 
+
         # print(angle)
         return angle
 
@@ -70,7 +70,8 @@ class poseDetector():
 
         # print(angle)
         return depth_angle
-    def drawJoints(self,img,p1, p2, p3,angle):
+
+    def drawJoints(self, img, p1, p2, p3, angle):
         x1, y1 = self.lmList[p1][1:]
         x2, y2 = self.lmList[p2][1:]
         x3, y3 = self.lmList[p3][1:]
@@ -84,6 +85,7 @@ class poseDetector():
         cv2.circle(img, (x3, y3), 15, (0, 0, 255), 2)
         cv2.putText(img, str(int(angle)), (x2 - 50, y2 + 50),
                     cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
+
     def findPerformanceAngle(self, img, p1, p2, p3, draw=True):
 
         # Get the landmarks
@@ -112,7 +114,8 @@ class poseDetector():
         #     cv2.putText(img, str(int(angle)), (x2 - 50, y2 + 50),
         #                 cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
         return angle
- 
+
+
 def main():
     cap = cv2.VideoCapture('koren.MOV')
 
@@ -132,13 +135,13 @@ def main():
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
- 
+
         cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3,
                     (255, 0, 0), 3)
- 
+
         cv2.imshow("Image", img)
         cv2.waitKey(1)
- 
- 
+
+
 if __name__ == "__main__":
     main()

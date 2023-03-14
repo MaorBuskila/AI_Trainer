@@ -52,6 +52,12 @@ def biceps_curls():
     x1, x2, x3 = 0, 0, 0
     y1, y2, y3 = 0, 0, 0
     angle = 0
+    frame_width = int(cap.get(3))
+    frame_height = int(cap.get(4))
+    size = (frame_width, frame_height,3)
+    black_frame = np.zeros(size)
+    portrait_mode = frame_height >= frame_width
+
     while True:
 
         success, img = cap.read()
